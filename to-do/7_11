@@ -1,0 +1,13 @@
+
+1. Connect Pi to radar
+
+2. Get/set configuration (radar)
+
+3. Settings file structure
+
+4. Command radar to scan
+
+5. Status/health for monitoring
+    -Connected
+    -Collecting
+    -etc
