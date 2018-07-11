@@ -56,9 +56,9 @@ MESSAGE_TYPE = \x12\x34'
 """
 
 # !!! Set the various IPs and ports
-UDP_IP_RX = "192.168.1.1" # Host (Raspberry Pi) IP address; can be reconfigured
-UDP_IP_TX = # TIP Radar IP address; refer to documentation for value
-UDP_PORT = # TIP Radar port; refer to documentation for value
+UDP_IP_RX = "192.168.1.1"  # Host (Raspberry Pi) IP address; can be reconfigured
+UDP_IP_TX = "192.168.1.100"  # TIP Radar IP address; refer to documentation for value (found on page 5)
+UDP_PORT = "21210"  # TIP Radar port; refer to documentation for value (found on page 5)
 
 # Set the default values of the radar
 """
