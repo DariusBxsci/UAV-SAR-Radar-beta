@@ -7,47 +7,23 @@ Command and control script for PulsON 440 via Pi.
 import sys
 import argparse
 from pulson440 import PulsON440
+import config
 
-def parse_args(args):
-    """
-    Input argument parser.
-    TIP Recommend use of argparse module
-    """
-    # !!!
 
 def main(args):
-    """
-    Top level method.
-    TIP This is just a suggested program flow.
-    """
-    #!!!
-    
+
     # Parse input arguments
     parsed_args = parse_args(args)
-    
+
     print(parsed_args)
-    
+
     # Create PulsON440 object
     radar = PulsON440()
-    
-    # Get the user settings
-    radar.read_config_file()
-    
-    # Connect to the radar
-    radar.connect()
-    
-    # Get current radar configuration
-    radar.get_radar_config()
-    
-    # Set and get radar configuration
-    radar.set_radar_config()
-    
-    if parsed_args.mode == "quick":
-        radar.quick_look()
-    elif parsed_args.mode == "collect":
-        radar.collect()
-    else:
-        raise ValueError('mode argument must be either quick or collect')
+    #hand radar object of to configurator
+    config.RADAR_OBJ = radar
+    #configure
+    config.configure(args)
+
 
 if __name__ == "__main__":
     """
