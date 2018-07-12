@@ -57,7 +57,7 @@ MESSAGE_TYPE = \x12\x34'
 
 # !!! Set the various IPs and ports
 UDP_IP_RX = "192.168.1.1"  # Host (Raspberry Pi) IP address; can be reconfigured
-UDP_IP_TX = "192.168.1.100"  # TIP Radar IP address; refer to documentation for value (found on page 5)
+UDP_IP_TX = "192.168.1.151"  # TIP Radar IP address; refer to documentation for value (found on page 5)
 UDP_PORT = "21210"  # TIP Radar port; refer to documentation for value (found on page 5)
 
 # Set the default values of the radar
@@ -375,15 +375,16 @@ elif op_mode == "q":
     os.remove("temp")
     
     # Plot the data
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.set_title('RTI')
-    plt.imshow(20*np.log10(np.abs(rti[:, :int(Nbin)])))
-    plt.colorbar(orientation='vertical')
-    ax.set_aspect('equal')
-    plt.show()
-    
-# Somehow the operating mode flag was messed up        
+    #
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111)
+    # ax.set_title('RTI')
+    # plt.imshow(20*np.log10(np.abs(rti[:, :int(Nbin)])))
+    # plt.colorbar(orientation='vertical')
+    # ax.set_aspect('equal')
+    # plt.show()
+
+# Somehow the operating mode flag was messed up
 else:
     pass
     
