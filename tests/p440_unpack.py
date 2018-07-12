@@ -9,7 +9,7 @@ import pickle
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from constants import SPEED_OF_LIGHT
+SPEED_OF_LIGHT = 299792458
 
 def unpack(file):
     """Unpacks PulsOn 440 radar data from input file"""
