@@ -8,13 +8,14 @@ import sys
 
 #Loads the file ---WIP--- SEE:'fileName'
 def unpickle(fileName, legacy=False):
-    pickle.load(fileName ,fix_imports=True, encoding="ASCII", errors="strict")
+    f = open(fileName, 'rb')
+    data = pickle.load(fileName)
+    f.close()
 
 #Handles the arguments given in the console
 def parse_args(args):
     parser = argparse.ArgumentParser(description='PulsON440 SAR Image former')
-    parser.add_argument('-l --legacy', action='store_true', dest='legacy',
-                        help='Load legacy format of file')
+    parser.add_argument('-l --legacy', action='store_true', dest='legacy', help='Load legacy format of file')
     parser.add_argument('-f', '--file', dest='file', help='PulsON 440 data file')
 
 #Main function, creates the SAR image
@@ -22,7 +23,7 @@ def main(args):
     #Gives arguments
     #args = parse_args(args) ---WIP--- parse_args() is still broken
     #Loads file
-    unpickle(arg.file, arg.legacy)#---WIP--- unpickle() is unknown
+    unpickle(args.file, args.legacy)#---WIP--- unpickle() is unknown
     
     #Mathematical functions
     
