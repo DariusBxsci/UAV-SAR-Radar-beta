@@ -4,13 +4,10 @@ import numpy as np
 import argparse
 import sys
 
-
-
-#Loads the file ---WIP--- SEE:'fileName'
-def unpickle(fileName, legacy=False):
-    f = open(fileName, 'rb')
-    data = pickle.load(fileName)
-    f.close()
+"""
+KNOWN BUGS:
+    -parse_args() isn't working as meant to, evidenced by print(args) outputting "none"
+"""    
 
 #Handles the arguments given in the console
 def parse_args(args):
@@ -20,16 +17,18 @@ def parse_args(args):
 
 #Main function, creates the SAR image
 def main(args):
-    #Gives arguments
-    #args = parse_args(args) ---WIP--- parse_args() is still broken
-    #Loads file
-    unpickle(args.file, args.legacy)#---WIP--- unpickle() is unknown
+#Gives arguments
+    args = parse_args(args)
+    print(sys.argv[1:])
+    print(parser)
+#Loads file - Replaced 'unpickle()'
+    f = open(args.file, 'rb')
+    data = pickle.load(args.file)
+    f.close()
+#Mathematical functions
     
-    #Mathematical functions
-    
-    #Plots the processed data
+#Plots the processed data
 
 #Starts the file's purpose on loading
 if __name__ == "__main__":
-    #main()  #Used for testing file
-    main(sys.argv[1:])  #<-Use in final version
+    main(sys.argv[1:])
