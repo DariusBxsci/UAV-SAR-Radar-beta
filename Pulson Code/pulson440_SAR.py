@@ -11,13 +11,8 @@ import matplotlib.pyplot as plt
 #Handles the arguments given in the console
 def parse_args(args):
     parser = argparse.ArgumentParser(description='PulsON440 SAR Image former')
-<<<<<<< HEAD
-    parser.add_argument('-f', '--file', action='store', dest='file', help='PulsON 440 data file')
-    parser.add_argument('-l --legacy', action='store_true', dest='legacy', help='Load legacy format of file')
-=======
     parser.add_argument('-f', '--file', dest='file', help='PulsON 440 data file')
     parser.add_argument('-l', '--legacy', action='store_true', dest='legacy', help='Load legacy format of file')
->>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
     return parser.parse_args(args)
 #Main function, creates the SAR image
 def main(args):
@@ -27,14 +22,8 @@ def main(args):
     f = open(args.file, 'rb')
     data = pickle.load(f)
     f.close()
-<<<<<<< HEAD
     #print(data)
-
-#plot data
-
-=======
 #Plot data
->>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
     Platform = data[0]
     Pulses = data[1]
     Ranges = data[2]
@@ -96,7 +85,6 @@ def coherently_integrate(mag1,mag2,bshift):
 
     #print(nmag)
     return nmag
-<<<<<<< HEAD
 
 =======
 #Mathematical functions
@@ -115,7 +103,6 @@ def coherently_integrate(mag1,mag2,bshift):
         4: Find the range to each pixel from pulse location
         5: Fill in the image pixel by pixel using the average signal at that range
     """
->>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
 #Plots the processed data
 
 #Starts the file's main function on loading
