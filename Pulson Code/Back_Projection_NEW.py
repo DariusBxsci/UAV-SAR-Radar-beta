@@ -7,8 +7,9 @@ import math
 import matplotlib.pyplot as plt
 
 IMAGE_RESOLUTION = (150,150)
-IMAGE_SIZE = (5.0,5.0)
+IMAGE_SIZE = (3.0,3.0)
 PIXEL_SIZE = (IMAGE_SIZE[0]/IMAGE_RESOLUTION[0],IMAGE_SIZE[1]/IMAGE_RESOLUTION[1])
+RANGE_AXIS = None
 
 def get_pixel_in_space(x,y):
     return (-IMAGE_SIZE[0]/2+PIXEL_SIZE[0]*x,-IMAGE_SIZE[1]/2+PIXEL_SIZE[1]*y)
@@ -25,14 +26,21 @@ def generate_range_vector(x,y,platform):
         res.append(get_pixel_range(x,y,p))
     return res
 
-RANGE_BIN_SIZE = 0.03
 def get_intensity_in_space(pulse_range,pulse_intensities):
-    r_bin = int(round(pulse_range / RANGE_BIN_SIZE))
+    r_bin = 0
+    """
+    while RANGE_AXIS[r_bin] < pulse_range:
+        r_bin += 1
+    """
+    r_bin = int(round( pulse_range / 0.0369 ))
+    #print("Falling in bin " + str(r_bin))
     return pulse_intensities[r_bin]
 
 def integrate_pixel_intensity(ranges,pulses):
     pixel_intensity = 0
     for i in range(len(ranges)):
+        if (i == 0):
+            print(pulses[i])
         pixel_intensity += get_intensity_in_space(ranges[i],pulses[i])
     return pixel_intensity
 
@@ -55,6 +63,10 @@ def main(args):
     
     pulses = data[1]
     range_bins = data[2][0]
+    print(range_bins)
+    
+    global RANGE_AXIS
+    RANGE_AXIS = range_bins
     
     #print(platform_positions)
     
