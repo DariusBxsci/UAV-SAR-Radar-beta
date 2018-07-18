@@ -8,33 +8,33 @@ import math
 
 import matplotlib.pyplot as plt
 
-"""
-KNOWN BUGS:
-    -Certain files are 'unrecognized arguments'
-"""
-
-   
-
 #Handles the arguments given in the console
 def parse_args(args):
     parser = argparse.ArgumentParser(description='PulsON440 SAR Image former')
+<<<<<<< HEAD
     parser.add_argument('-f', '--file', action='store', dest='file', help='PulsON 440 data file')
     parser.add_argument('-l --legacy', action='store_true', dest='legacy', help='Load legacy format of file')
+=======
+    parser.add_argument('-f', '--file', dest='file', help='PulsON 440 data file')
+    parser.add_argument('-l', '--legacy', action='store_true', dest='legacy', help='Load legacy format of file')
+>>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
     return parser.parse_args(args)
 #Main function, creates the SAR image
 def main(args):
 #Gives arguments
     args = parse_args(sys.argv[1:])
-    print(sys.argv[1:])
-    print(args.file)
 #Loads pulses file
     f = open(args.file, 'rb')
     data = pickle.load(f)
     f.close()
+<<<<<<< HEAD
     #print(data)
 
 #plot data
 
+=======
+#Plot data
+>>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
     Platform = data[0]
     Pulses = data[1]
     Ranges = data[2]
@@ -96,7 +96,26 @@ def coherently_integrate(mag1,mag2,bshift):
 
     #print(nmag)
     return nmag
+<<<<<<< HEAD
 
+=======
+#Mathematical functions
+    """
+    Steps & proposed solutions
+        1: Locate the reference point
+    """
+    xCenter = Math.round(np.amax(Platform[0])-((np.amax(Platform[0])-np.amin(Platform[0]))/2))
+    yCenter = Math.round(np.amax(Platform[1])-((np.amax(Platform[1])-np.amin(Platform[1]))/2))
+    zCenter = Math.round(np.amax(Platform[2])-((np.amax(Platform[2])-np.amin(Platform[2]))/2))
+    """
+        2: Determine the image size/location/resolution (Square image)
+        3: Compensate for time & position
+            for n:
+                time?[n] = 2(R[reference]-R[n])/SPEED_OF_LIGHT
+        4: Find the range to each pixel from pulse location
+        5: Fill in the image pixel by pixel using the average signal at that range
+    """
+>>>>>>> 4aecd173679fc10aadd38f092ad4fbd00c969935
 #Plots the processed data
 
 #Starts the file's main function on loading
