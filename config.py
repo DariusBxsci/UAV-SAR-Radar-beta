@@ -16,17 +16,17 @@ def radar_setup():
 
 #these functions define our configuration presets
 def quick():
-    radar_setup(parse_config("./config/quick.cfg"))
+    radar_setup()
     RADAR_OBJ.quick_look()
-    return
+    return parse_config("./config/quick.cfg")
 
 def collect():
-    radar_setup(parse_config("./config/quick.cfg"))
+    radar_setup(parse_config("./config/collect.cfg"))
     RADAR_OBJ.collect()
-    return
+    return parse_config("./config/quick.cfg")
 
 #config_presets = {"quick": quick, "collect": collect}
 
 def configure(arg):
     #evaluate the preset config function for whatever argument we got
-        eval(arg+"()"):
+        eval(arg[0]+"()")
