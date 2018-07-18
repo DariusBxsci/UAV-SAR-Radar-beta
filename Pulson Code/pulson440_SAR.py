@@ -4,48 +4,52 @@ import numpy as np
 import argparse
 import sys
 
-#Loads a given file
-def unpickle(args):
-    f = open(arg, 'rb')
-    data = pickle.load(arg)
-    f.close()
-    return data
+"""
+KNOWN BUGS:
+    -Certain files are 'unrecognized arguments'
+"""    
+
+   
 
 #Handles the arguments given in the console
 def parse_args(args):
     parser = argparse.ArgumentParser(description='PulsON440 SAR Image former')
-    parser.add_argument('-f', '--file', action='store_true', dest='file', help='PulsON 440 data file')
-    parser.add_argument('-l --legacy', action='store_true', dest='legacy', help='Load legacy format of file')
+    parser.add_argument('-f', '--file', dest='file', help='PulsON 440 data file')
+    parser.add_argument('-l', '--legacy', action='store_true', dest='legacy', help='Load legacy format of file')
     return parser.parse_args(args)
-
 #Main function, creates the SAR image
 def main(args):
 #Gives arguments
     args = parse_args(sys.argv[1:])
     print(sys.argv[1:])
     print(args.file)
-#Loads file
-    unpickle(args.file)
+#Loads pulses file
+    f = open(args.file, 'rb')
+    data = pickle.load(f)
+    f.close()
+    pos = data[0]
+    pulse = data[1]
+    bins = data[2]
 #Mathematical functions
     """
     Steps & proposed solutions
         1: Locate the reference point
-            rangeBins = 'number of horizontal cells' - 1
+    rangeBins = 'number of horizontal cells' - 1
+    
+    x-axis = pos[0] 'row 1'
+    y-axis = pos[1] 'row 2'
+    z-axis = pos[2] 'row 3'
+    
+    xMax = max(x-axis)
+    xMin = min(x-axis)
+    yMax = max(y-axis)
+    yMin = min(y-axis)
+    zMax = max(z-axis)
+    zMin = min(z-axis)
             
-            x-axis = data[0] 'row 1'
-            y-axis = data[1] 'row 2'
-            z-axis = data[2] 'row 3'
-            
-            xMax = max(x-axis)
-            xMin = min(x-axis)
-            yMax = max(y-axis)
-            yMin = min(y-axis)
-            zMax = max(z-axis)
-            zMin = min(z-axis)
-            
-            xCenter = Math.round(xMax-((xMax-xMin)/2))
-            yCenter = Math.round(yMax-((yMax-yMin)/2))
-            zCenter = Math.round(zMax-((zMax-zMin)/2))
+    xCenter = Math.round(xMax-((xMax-xMin)/2))
+    yCenter = Math.round(yMax-((yMax-yMin)/2))
+    zCenter = Math.round(zMax-((zMax-zMin)/2))
         2: Determine the image size/location/resolution (Square image)
         3: Compensate for time & position
             for n:
@@ -55,6 +59,6 @@ def main(args):
     """
 #Plots the processed data
 
-#Starts the file's purpose on loading
+#Starts the file's main function on loading
 if __name__ == "__main__":
     main(sys.argv[1:])
