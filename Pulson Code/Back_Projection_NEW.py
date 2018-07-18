@@ -6,13 +6,15 @@ import pylab
 import math
 import matplotlib.pyplot as plt
 
-IMAGE_RESOLUTION = (150,150)
-IMAGE_SIZE = (3.0,3.0)
+IMAGE_RESOLUTION = (300,300)
+IMAGE_SIZE = (8.0,8.0)
 PIXEL_SIZE = (IMAGE_SIZE[0]/IMAGE_RESOLUTION[0],IMAGE_SIZE[1]/IMAGE_RESOLUTION[1])
 RANGE_AXIS = None
 
 def get_pixel_in_space(x,y):
-    return (-IMAGE_SIZE[0]/2+PIXEL_SIZE[0]*x,-IMAGE_SIZE[1]/2+PIXEL_SIZE[1]*y)
+    loc = (-IMAGE_SIZE[0]/2+PIXEL_SIZE[0]*x,-IMAGE_SIZE[1]/2+PIXEL_SIZE[1]*y)
+    #print (loc)
+    return loc
 
 def get_pixel_range(x,y,plat_x):
     loc = get_pixel_in_space(x,y)
@@ -32,15 +34,15 @@ def get_intensity_in_space(pulse_range,pulse_intensities):
     while RANGE_AXIS[r_bin] < pulse_range:
         r_bin += 1
     """
-    r_bin = int(round( pulse_range / 0.0369 ))
+    r_bin = int(( pulse_range / (0.0369/2) ))
     #print("Falling in bin " + str(r_bin))
     return pulse_intensities[r_bin]
 
 def integrate_pixel_intensity(ranges,pulses):
     pixel_intensity = 0
     for i in range(len(ranges)):
-        if (i == 0):
-            print(pulses[i])
+        #if (i == 0):
+            #print(pulses[i])
         pixel_intensity += get_intensity_in_space(ranges[i],pulses[i])
     return pixel_intensity
 
@@ -60,6 +62,7 @@ def main(args):
     
     platform_positions = data[0]
     platform_positions = np.swapaxes(platform_positions,0,1).tolist()[0]
+    print(platform_positions)
     
     pulses = data[1]
     range_bins = data[2][0]
@@ -73,7 +76,7 @@ def main(args):
     sar_image = np.zeros(IMAGE_RESOLUTION)
     for i in range(len(sar_image)):
         for j in range(len(sar_image[i])):
-            sar_image[i][j] = np.absolute(integrate_pixel_intensity( generate_range_vector(i,j,platform_positions) , pulses ))
+            sar_image[i][j] = np.absolute(integrate_pixel_intensity( generate_range_vector(j,i,platform_positions) , pulses ))
             
     plt.imshow(sar_image)
     plt.show()
