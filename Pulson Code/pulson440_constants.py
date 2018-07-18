@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Constants module
+PulsON 440 constants module
 """
 
 # Universal constants
