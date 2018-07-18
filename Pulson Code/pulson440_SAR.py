@@ -34,22 +34,11 @@ def main(args):
     """
     Steps & proposed solutions
         1: Locate the reference point
-    rangeBins = 'number of horizontal cells' - 1
-    
-    x-axis = pos[0] 'row 1'
-    y-axis = pos[1] 'row 2'
-    z-axis = pos[2] 'row 3'
-    
-    xMax = max(x-axis)
-    xMin = min(x-axis)
-    yMax = max(y-axis)
-    yMin = min(y-axis)
-    zMax = max(z-axis)
-    zMin = min(z-axis)
-            
-    xCenter = Math.round(xMax-((xMax-xMin)/2))
-    yCenter = Math.round(yMax-((yMax-yMin)/2))
-    zCenter = Math.round(zMax-((zMax-zMin)/2))
+    """
+    xCenter = Math.round(np.amax(pos[0])-((np.amax(pos[0])-np.amin(pos[0]))/2))
+    yCenter = Math.round(np.amax(pos[1])-((np.amax(pos[1])-np.amin(pos[1]))/2))
+    zCenter = Math.round(np.amax(pos[2])-((np.amax(pos[2])-np.amin(pos[2]))/2))
+    """
         2: Determine the image size/location/resolution (Square image)
         3: Compensate for time & position
             for n:
