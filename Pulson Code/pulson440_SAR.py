@@ -6,21 +6,22 @@ import sys
 
 """
 KNOWN BUGS:
-    -parse_args() isn't working as meant to, evidenced by print(args) outputting "none"
+    -Certain files are 'unrecognized arguments'
 """    
 
 #Handles the arguments given in the console
 def parse_args(args):
     parser = argparse.ArgumentParser(description='PulsON440 SAR Image former')
+    parser.add_argument('-f', '--file', action='store_true', dest='file', help='PulsON 440 data file')
     parser.add_argument('-l --legacy', action='store_true', dest='legacy', help='Load legacy format of file')
-    parser.add_argument('-f', '--file', dest='file', help='PulsON 440 data file')
+    return parser.parse_args(args)
 
 #Main function, creates the SAR image
 def main(args):
 #Gives arguments
-    args = parse_args(args)
+    args = parse_args(sys.argv[1:])
     print(sys.argv[1:])
-    print(parser)
+    print(args.file)
 #Loads file - Replaced 'unpickle()'
     f = open(args.file, 'rb')
     data = pickle.load(args.file)
