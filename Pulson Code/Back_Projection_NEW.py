@@ -5,9 +5,10 @@ import sys
 import pylab
 import math
 import matplotlib.pyplot as plt
+from scipy import signal
 
-IMAGE_RESOLUTION = (300,300)
-IMAGE_SIZE = (8.0,8.0)
+IMAGE_RESOLUTION = (600,600)
+IMAGE_SIZE = (5.0,5.0)
 PIXEL_SIZE = (IMAGE_SIZE[0]/IMAGE_RESOLUTION[0],IMAGE_SIZE[1]/IMAGE_RESOLUTION[1])
 RANGE_AXIS = None
 
@@ -76,9 +77,9 @@ def main(args):
     sar_image = np.zeros(IMAGE_RESOLUTION)
     for i in range(len(sar_image)):
         for j in range(len(sar_image[i])):
-            sar_image[i][j] = np.absolute(integrate_pixel_intensity( generate_range_vector(j,i,platform_positions) , pulses ))
+            sar_image[len(sar_image)-i-1][len(sar_image[i])-j-1] = np.absolute(integrate_pixel_intensity( generate_range_vector(j,i,platform_positions) , pulses ))
             
-    plt.imshow(sar_image)
+    plt.imshow(signal.convolve2d(sar_image, [[0.11,0.11,0.11],[0.11,0.11,0.11],[0.11,0.11,0.11]] ))
     plt.show()
 
 if __name__ == '__main__':
