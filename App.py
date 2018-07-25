@@ -1,12 +1,11 @@
+import matplotlib.pyplot as plt
 import tkinter as tk
 import os
 from tkinter import ttk, filedialog, font
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
-import Pulson_Code.pulson440_unpack as unpack
+# import Pulson_Code.pulson440_unpack as unpack
 
-import matplotlib
-import matplotlib.pyplot as plt
 #matplotlib.use('TkAgg')
 
 LARGE_FONT = ('Helvetica', 50, 'bold')
@@ -266,11 +265,22 @@ class UnpackExisting(tk.Frame):
 
     directory = None
 
+    filename = None
+
     string_args = None
 
     def assign_directory(self):
         UnpackExisting.directory = get_data_file()
-        pulse_data_file_label = tk.Label(self, text=UnpackExisting.directory,
+
+        index = None
+        for f in range(0, len(UnpackExisting.directory)):
+            if UnpackExisting.directory[f] == '/':
+                index = f
+
+        UnpackExisting.filename = UnpackExisting.directory[(index+1):]
+
+        pulse_data_file_label = tk.Label(self, text='File Selected: ' + UnpackExisting.filename + '\n (' +
+                                                    UnpackExisting.directory + ')',
                                          font=SMALLER_FONT, bg='#3f3f3f', fg='#bcefff')
         pulse_data_file_label.grid(row=1, column=1, sticky='nws', padx=10, pady=10)
 
