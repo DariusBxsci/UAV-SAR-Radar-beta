@@ -11,8 +11,8 @@ import pickle
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from pulson440_formats import CONFIG_MSG_FORMAT
-from pulson440_constants import SPEED_OF_LIGHT, T_BIN, DN_BIN
+from Pulson_Code.pulson440_formats import CONFIG_MSG_FORMAT
+from Pulson_Code.pulson440_constants import SPEED_OF_LIGHT, T_BIN, DN_BIN
 
 # Constants
 DT_0 = 10 # Path delay through antennas (ns)
