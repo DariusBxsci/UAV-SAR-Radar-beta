@@ -2,9 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4fa5be4-d48a-4ab7-82bc-b67aec3f4c09" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Pulson_Code/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/control.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/formats.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/pulson.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/unpack.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/status" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/UAV-SAR-Radar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UAV-SAR-Radar.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pulson_Code/pulson440_unpack.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pulson_Code/pulson440_unpack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pulson_Code/radar_parse_settings" beforeDir="false" afterPath="$PROJECT_DIR$/pulsonapplib/radar_parse_settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pulson_Code/radar_settings" beforeDir="false" afterPath="$PROJECT_DIR$/pulsonapplib/radar_settings" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,18 +27,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="App.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="241" column="47" selection-start-line="241" selection-start-column="47" selection-end-line="241" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
-      <file leaf-file-name="pulson440_unpack.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440_unpack.py">
+      <file leaf-file-name="BackProjection.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/PycharmProjects/BackProjectionTutorial/BackProjection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="23" lean-forward="true" selection-start-column="23" selection-end-column="23" />
+            <state relative-caret-position="324">
+              <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pulson.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pulsonapplib/pulson.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3618">
+              <caret line="201" column="40" selection-start-line="201" selection-start-column="40" selection-end-line="201" selection-end-column="40" />
               <folding>
-                <element signature="e#103#112#0" expanded="true" />
+                <element signature="e#107#116#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,18 +71,49 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+      <find>main</find>
+      <find>store_true</find>
+      <find>--collect</find>
+      <find>draw</find>
+      <find>get_data_file</find>
+      <find>'#425f68'</find>
+      <find>b.</find>
+      <find>pulson440_unpack</find>
+      <find>read_scan</find>
+      <find>scan_request</find>
+      <find>collect</find>
+      <find>control</find>
+      <find>exit()</find>
+      <find>-f</find>
+      <find>args</find>
+      <find>-o</find>
+      <find>askope</find>
+      <find>)</find>
+      <find>the file</find>
       <find>radar</find>
-      <find>parsed_args</find>
-      <find>tk</find>
-      <find>pack</find>
-      <find>Start Page</find>
-      <find>SingularUnpack</find>
-      <find>plt</find>
+      <find>temp</find>
+      <find>write</find>
+      <find>connected</find>
+      <find>connect</find>
+      <find>radar_parse</find>
+      <find>connection</find>
+      <find>style</find>
+      <find>button0</find>
+      <find>Colormap:</find>
+      <find>asksave</find>
     </findStrings>
     <replaceStrings>
       <replace>Tk</replace>
       <replace>Home</replace>
       <replace>UnpackExisting</replace>
+      <replace>args_string</replace>
+      <replace>get_unpack_binary_file</replace>
+      <replace>CLICK_COLOR</replace>
+      <replace>c.</replace>
+      <replace># exit()</replace>
+      <replace>unpack</replace>
+      <replace>, shell=True)</replace>
+      <replace>pulson.PulsON440.connection</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -69,14 +128,22 @@
         <option value="$PROJECT_DIR$/Pulson Code/App.py" />
         <option value="$PROJECT_DIR$/Pulson Code/pulson440_control.py" />
         <option value="$PROJECT_DIR$/Pulson Code/radar_parse_settings" />
-        <option value="$PROJECT_DIR$/App.py" />
         <option value="$PROJECT_DIR$/Pulson_Code/pulson440_unpack.py" />
+        <option value="$PROJECT_DIR$/Pulson_Code/__init__.py" />
+        <option value="$PROJECT_DIR$/Pulson_Code/pulson440_unpack_app.py" />
+        <option value="$PROJECT_DIR$/pulsonapplib/README.md" />
+        <option value="$PROJECT_DIR$/pulsonapplib/radar.py" />
+        <option value="$PROJECT_DIR$/pulsonapplib/unpack.py" />
+        <option value="$PROJECT_DIR$/Pulson_Code/pulson440_control.py" />
+        <option value="$PROJECT_DIR$/pulsonapplib/control.py" />
+        <option value="$PROJECT_DIR$/pulsonapplib/pulson.py" />
+        <option value="$PROJECT_DIR$/App.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="56" />
+    <option name="x" value="105" />
+    <option name="y" value="36" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -98,6 +165,20 @@
               <item name="UAV-SAR-Radar" type="462c0819:PsiDirectoryNode" />
               <item name="Pulson_Code" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UAV-SAR-Radar" type="462c0819:PsiDirectoryNode" />
+              <item name="pulsonapplib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UAV-SAR-Radar" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BackProjectionTutorial" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -105,15 +186,22 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/BackProjectionTutorial/BackProjection.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pulsonapplib" />
+      <recent name="$PROJECT_DIR$/Pulson_Code/pulsonapplib" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Pulson_Code" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pulsonapplib/temp" />
+      <recent name="$PROJECT_DIR$/pulsonapplib" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/Pulson_Code/pulsonapplib" />
+      <recent name="$PROJECT_DIR$/Pulson_Code" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -165,13 +253,73 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="control" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="UAV-SAR-Radar" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pulsonapplib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pulsonapplib/control.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="formats" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="UAV-SAR-Radar" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pulsonapplib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pulsonapplib/formats.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="pulson440_unpack_app" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="UAV-SAR-Radar" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Pulson_Code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pulson_Code/pulsonapplib/pulson440_unpack_app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <list>
       <item itemvalue="Python.Back_Projection_NEW" />
       <item itemvalue="Python.App" />
+      <item itemvalue="Python.pulson440_unpack_app" />
+      <item itemvalue="Python.control" />
+      <item itemvalue="Python.formats" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.App" />
+        <item itemvalue="Python.formats" />
+        <item itemvalue="Python.control" />
+        <item itemvalue="Python.pulson440_unpack_app" />
         <item itemvalue="Python.Back_Projection_NEW" />
       </list>
     </recent_temporary>
@@ -190,25 +338,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="36" width="1920" height="1044" extended-state="7" />
+    <frame x="0" y="36" width="1920" height="1044" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18229167" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32893288" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32893288" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32893288" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32893288" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39933994" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39933994" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -226,67 +375,16 @@
           <line>7</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/App.py</url>
+          <line>260</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="10" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pulson440_skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="15" lean-forward="true" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rpi440_control.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/constants.py" />
-    <entry file="file://$PROJECT_DIR$/p440_unpack_skeleton.py" />
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RPi_440_Control_Skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="44" column="44" selection-start-line="44" selection-start-column="44" selection-end-line="44" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rpi440_control.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/constants.py" />
-    <entry file="file://$PROJECT_DIR$/p440_unpack_skeleton.py" />
-    <entry file="file://$PROJECT_DIR$/p440_unpack_skeleton.py" />
-    <entry file="file://$PROJECT_DIR$/constants.py" />
-    <entry file="file://$PROJECT_DIR$/rpi440_control.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pulson440_skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="20" column="15" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RPi_440_Control_Skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="384" column="16" selection-start-line="384" selection-start-column="16" selection-end-line="384" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RPi_440_Control_Skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pulson440_skeleton.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -372,14 +470,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Pulson Code/pulson440_unpack.py" />
     <entry file="file://$PROJECT_DIR$/p440_unpack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="179" column="15" selection-start-line="179" selection-start-column="12" selection-end-line="179" selection-end-column="15" />
+        <state relative-caret-position="3204">
+          <caret line="178" column="36" selection-start-line="178" selection-start-column="36" selection-end-line="178" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Pulson Code/pulson440_unpack.py" />
     <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440_formats.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -387,16 +485,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440_unpack_app.py" />
-    <entry file="file://$PROJECT_DIR$/App.py">
+    <entry file="file://$PROJECT_DIR$/pulson440_formats.py" />
+    <entry file="file://$PROJECT_DIR$/Pulson_Code/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440_unpack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="-2098">
           <caret column="23" lean-forward="true" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/pulson440_unpack_app.py" />
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/pulson440_constants.py" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="99" lean-forward="true" selection-start-column="99" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/status">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/radar.py" />
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/unpack.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/control">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pulson_Code/pulson440_control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-100">
+          <caret line="63" column="34" lean-forward="true" selection-end-line="93" selection-end-column="22" />
           <folding>
-            <element signature="e#103#112#0" expanded="true" />
+            <element signature="e#113#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/radar_settings">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/formats.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#61#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/control.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="74" column="13" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="13" />
+          <folding>
+            <element signature="e#113#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/pulson.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3618">
+          <caret line="201" column="40" selection-start-line="201" selection-start-column="40" selection-end-line="201" selection-end-column="40" />
+          <folding>
+            <element signature="e#107#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/BackProjectionTutorial/BackProjection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="241" column="47" selection-start-line="241" selection-start-column="47" selection-end-line="241" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
