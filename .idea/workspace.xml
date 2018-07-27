@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a4fa5be4-d48a-4ab7-82bc-b67aec3f4c09" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Pulson_Code/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/control.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/formats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/pulson.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pulsonapplib/unpack.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/status" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/UAV-SAR-Radar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UAV-SAR-Radar.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pulsonapplib/temp/remote_settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pulson_Code/radar_parse_settings" beforeDir="false" afterPath="$PROJECT_DIR$/pulsonapplib/radar_parse_settings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pulson_Code/radar_settings" beforeDir="false" afterPath="$PROJECT_DIR$/pulsonapplib/radar_settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pulsonapplib/temp/untitled_data0" beforeDir="false" afterPath="$PROJECT_DIR$/pulsonapplib/temp/untitled_data0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/app_testing" beforeDir="false" afterPath="$PROJECT_DIR$/tests/app_testing" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,11 +20,30 @@
       <file leaf-file-name="App.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="241" column="47" selection-start-line="241" selection-start-column="47" selection-end-line="241" selection-end-column="47" />
+            <state relative-caret-position="170">
+              <caret line="44" column="16" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="16" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="duplicate_radar_settings" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pulsonapplib/temp/duplicate_radar_settings">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="radar_settings" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pulsonapplib/radar_settings">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="radar_settings" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pulsonapplib/temp/radar_settings">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="35" selection-start-column="35" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -71,25 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>main</find>
-      <find>store_true</find>
-      <find>--collect</find>
-      <find>draw</find>
-      <find>get_data_file</find>
-      <find>'#425f68'</find>
-      <find>b.</find>
-      <find>pulson440_unpack</find>
-      <find>read_scan</find>
-      <find>scan_request</find>
-      <find>collect</find>
-      <find>control</find>
-      <find>exit()</find>
-      <find>-f</find>
-      <find>args</find>
-      <find>-o</find>
-      <find>askope</find>
-      <find>)</find>
-      <find>the file</find>
       <find>radar</find>
       <find>temp</find>
       <find>write</find>
@@ -101,6 +91,25 @@
       <find>button0</find>
       <find>Colormap:</find>
       <find>asksave</find>
+      <find>NOT_PRIM</find>
+      <find>is_connected</find>
+      <find>print</find>
+      <find>unpack_pulse_data</find>
+      <find>title_accent_color</find>
+      <find>PulsOnDataApp.hide_error_message()</find>
+      <find>try:</find>
+      <find>connect to the</find>
+      <find>os.system</find>
+      <find>file.write</find>
+      <find>ur bad</find>
+      <find>NOT_ACCENT</find>
+      <find>ERROR</find>
+      <find>ERROR_COLOR</find>
+      <find>check</find>
+      <find>show_error</find>
+      <find>hide_error</find>
+      <find>unpack</find>
+      <find>get_unpack_bin</find>
     </findStrings>
     <replaceStrings>
       <replace>Tk</replace>
@@ -114,6 +123,8 @@
       <replace>unpack</replace>
       <replace>, shell=True)</replace>
       <replace>pulson.PulsON440.connection</replace>
+      <replace>ERROR_COLOR</replace>
+      <replace>success</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -169,6 +180,12 @@
               <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
               <item name="UAV-SAR-Radar" type="462c0819:PsiDirectoryNode" />
               <item name="pulsonapplib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UAV-SAR-Radar" type="462c0819:PsiDirectoryNode" />
+              <item name="pulsonapplib" type="462c0819:PsiDirectoryNode" />
+              <item name="temp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UAV-SAR-Radar" type="b2602c69:ProjectViewProjectNode" />
@@ -343,13 +360,13 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18229167" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005208" side_tool="true" weight="0.32893288" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32893288" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32893288" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.32893288" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32893288" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32893288" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39933994" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -377,7 +394,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/App.py</url>
-          <line>260</line>
+          <line>358</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
@@ -385,19 +402,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pulson440_skeleton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="15" selection-start-line="20" selection-start-column="15" selection-end-line="20" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rpi440_control.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/constants.py" />
     <entry file="file://$PROJECT_DIR$/p440_unpack_skeleton.py" />
     <entry file="file://$PROJECT_DIR$/RPi_440_Control_Skeleton.py">
@@ -543,9 +547,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pulsonapplib/radar_settings">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/pulsonapplib/formats.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -582,10 +583,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/temp/remote_settings">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/temp/radar_settings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/radar_settings">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pulsonapplib/temp/duplicate_radar_settings">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/App.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="241" column="47" selection-start-line="241" selection-start-column="47" selection-end-line="241" selection-end-column="47" />
+        <state relative-caret-position="170">
+          <caret line="44" column="16" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="16" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
