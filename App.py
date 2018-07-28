@@ -7,7 +7,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
-from pulsonapplib import unpack, pulson
+from pulsonapplib import unpack
 import socket
 
 #matplotlib.use('TkAgg')
@@ -312,18 +312,24 @@ class DataCollection(tk.Frame):
 
     def start(self, a):
         run_type = '-' + str(a.get())
+        print(run_type)
+        shoot_pulses = "python control.py " + run_type + " &"
         if run_type == '-q' or run_type == '-c':
             cmds1 = ("sshpass -p 'TimHoward' ssh pi@192.168.2.1", "cd nile_bad_idea/pulsonapplib",
-                    "python control.py " + run_type + "")  # duplicate of below
+                     "python control.py " + run_type + " &")  # duplicate of below
 
             # process1 = subprocess.Popen('/bin/bash', stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-            process1 = subprocess.Popen('/bin/bash', stdin=PIPE)
+            process1 = subprocess.Popen('/bin/bash', stdin=PIPE, shell=True)
 
             for cmd in cmds1:
                 command = cmd + '\n'
                 process1.stdin.write(command.encode(encoding='UTF-8'))
             process1.stdin.close()
-            subprocess.Popen('bin/bash', "python control.py " + run_type + "", stdin=PIPE)
+
+            print(str(subprocess.check_output('cat status', shell=True)))
+
+            #subprocess.Popen("python control.py " + run_type + " &")
+
             stop_button = ttk.Button(self, text='STOP', style='my.TButton',
                                      command=lambda: DataCollection.stop(self))
             stop_button.grid(row=4, column=1, rowspan=2, sticky='news')
@@ -360,6 +366,7 @@ class DataCollection(tk.Frame):
             process2.stdin.write(command.encode(encoding='UTF-8'))
         process2.stdin.close()
 
+        print(DataCollection.host_directory)
         scp = "sshpass -p 'TimHoward' scp pi@192.168.2.1:nile_bad_idea/pulsonapplib/temp/untitled_data0 " + DataCollection.host_directory + "/pulsonapplib/temp"
         subprocess.Popen(scp.encode('UTF-8'), shell=True)
 

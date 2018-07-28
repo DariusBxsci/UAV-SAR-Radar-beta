@@ -9,8 +9,8 @@ import time
 import math
 import socket
 import datetime
-from pulsonapplib.formats import CONFIG_MSG_FORMAT
-from pulsonapplib.constants import SPEED_OF_LIGHT, MAX_PACKET_SIZE, \
+from formats import CONFIG_MSG_FORMAT
+from constants import SPEED_OF_LIGHT, MAX_PACKET_SIZE, \
     CONTINUOUS_SCAN, STOP_SCAN, DT_MIN, T_BIN, DN_BIN, SEG_NUM_BINS
 
 running = False
