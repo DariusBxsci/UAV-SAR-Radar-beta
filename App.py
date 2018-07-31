@@ -1,14 +1,13 @@
-import os
 import filecmp
+import threading
 import time
 import subprocess
 from subprocess import PIPE
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, messagebox
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
-from pulsonapplib import unpack
-import socket
+from pulsonapplib import unpack, sar
 
 #matplotlib.use('TkAgg')
 
@@ -49,6 +48,11 @@ class PulsOnDataApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         tk.Tk.wm_title(self, "Nile's Horrible Idea")
 
+        img = tk.Image("photo", file="pulsonapplib/fuego.png")
+        self.tk.call('wm', 'iconphoto', self._w, img)
+
+        #tk.Tk.iconbitmap("pulsonapplib/fuego.ico")
+
         container = tk.Frame(self)
         container.pack(side='top', fill='both', expand='true')
         container.grid_rowconfigure(0, weight=1)
@@ -56,7 +60,7 @@ class PulsOnDataApp(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, RadarSettingPage, DataCollection, UnpackExisting):
+        for F in (StartPage, RadarSettingPage, DataCollection, UnpackExisting, BackProjection):
 
             frame = F(container, self)
 
@@ -76,7 +80,7 @@ class PulsOnDataApp(tk.Tk):
         error_string = error_string + message
         error_success_label = tk.Label(self, text=error_string, font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ERROR_COLOR)
         error_success_label.grid(row=1, column=0, columnspan=2)
-        
+
     def show_success_message(self, message):
         success_string = ''
         success_string = success_string + message
@@ -87,9 +91,11 @@ class PulsOnDataApp(tk.Tk):
         error_success_label = tk.Label(self, text='', font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ERROR_COLOR)
         error_success_label.grid(row=1, column=0, columnspan=2, sticky="news")
 
+    host_directory = ''
 
-def unpack_pulse_data(directory):
-    print(directory)
+    def get_host_dir(self):
+        output = str(subprocess.check_output('pwd', shell=True))
+        PulsOnDataApp.host_directory = output[2:(len(output)-3)]
 
 
 # Opens this page on start
@@ -104,8 +110,8 @@ class StartPage(tk.Frame):
 
         # All styles initialized here
         button_style = ttk.Style()
-        button_style.configure('my.TButton', foreground=INTERFACE_COLOR, background=ACCENT_COLOR, font=('Helvetica', 30))
-        button_style.map('my.TButton', background=[('disabled', ACCENT_COLOR),
+        button_style.configure('default.TButton', foreground=INTERFACE_COLOR, background=ACCENT_COLOR, font=('Helvetica', 30))
+        button_style.map('default.TButton', background=[('disabled', ACCENT_COLOR),
                                                    ('pressed', ACCENT_CLICK_COLOR),
                                                    ('active', ACCENT_HOVER_COLOR)])
         back_button_style = ttk.Style()
@@ -114,26 +120,28 @@ class StartPage(tk.Frame):
         back_button_style.map('back.TButton', background=[('disabled', TITLE_ACCENT_COLOR),
                                                    ('pressed', TITLE_ACCENT_CLICK_COLOR),
                                                    ('active', TITLE_ACCENT_HOVER_COLOR)])
+        progressbar_style = ttk.Style()
+        progressbar_style.configure('default.Horizontal.TProgressbar', background=SUCCESS_COLOR, troughcolor=INTERFACE_COLOR)
 
         label = tk.Label(self, text='PulsON440 Data Center', font=LARGE_FONT, bg=INTERFACE_COLOR, fg=TITLE_ACCENT_COLOR)
         label.grid(row=0, column=0, columnspan=2)
 
         PulsOnDataApp.hide_error_message(self)
 
-        button1 = ttk.Button(self, text='Change Radar\n     Settings', style='my.TButton',
+        button1 = ttk.Button(self, text='Change Radar\n     Settings', style='default.TButton',
                              command=lambda: controller.show_frame(RadarSettingPage))
         button1.grid(padx=10, pady=10, row=1, column=0, sticky='news')
 
-        button2 = ttk.Button(self, text='Data Collection', style='my.TButton',
+        button2 = ttk.Button(self, text='Data Collection', style='default.TButton',
                              command=lambda: controller.show_frame(DataCollection))
         button2.grid(padx=10, pady=10, row=1, column=1, sticky='news')
 
-        button3 = ttk.Button(self, text='Unpack Existing', style='my.TButton',
+        button3 = ttk.Button(self, text='Unpack Existing', style='default.TButton',
                              command=lambda: controller.show_frame(UnpackExisting))
         button3.grid(padx=10, pady=10, row=2, column=0, sticky='news')
 
-        button4 = ttk.Button(self, text='Back Projection', style='my.TButton',
-                             command=lambda: controller.show_frame(UnpackExisting))
+        button4 = ttk.Button(self, text='Back Projection', style='default.TButton',
+                             command=lambda: controller.show_frame(BackProjection))
         button4.grid(padx=10, pady=10, row=2, column=1, sticky='news')
 
         quit_button = ttk.Button(self, text='Quit', style='back.TButton', command=lambda: app.quit())
@@ -144,11 +152,11 @@ class StartPage(tk.Frame):
 class RadarSettingPage(tk.Frame):
 
     def pass_back(self):
-        scp2 = "sshpass -p 'TimHoward' scp pi@192.168.2.1:nile_bad_idea/pulsonapplib/radar_settings /home/nilecamai/git/UAV-SAR-Radar/pulsonapplib/temp "
+        scp2 = "sshpass -p 'TimHoward' scp pi@192.168.2.1:nile_bad_idea/pulsonapplib/radar_settings " + PulsOnDataApp.host_directory + "/pulsonapplib/temp "
         subprocess.Popen(scp2.encode('UTF-8'), shell=True)
 
     def push_to(self):
-        scp = "sshpass -p 'TimHoward' scp /home/nilecamai/git/UAV-SAR-Radar/pulsonapplib/radar_settings pi@192.168.2.1:nile_bad_idea/pulsonapplib/radar_settings "
+        scp = "sshpass -p 'TimHoward' scp " + PulsOnDataApp.host_directory + "/pulsonapplib/radar_settings pi@192.168.2.1:nile_bad_idea/pulsonapplib/radar_settings "
         subprocess.Popen(scp.encode('UTF-8'), shell=True)
 
     def is_the_same(self):
@@ -176,7 +184,7 @@ class RadarSettingPage(tk.Frame):
 
             print([dT_0, range_start, range_stop, tx_gain_ind, pii, code_channel])
 
-            RadarSettingPage.write_duplicate(self)
+            self.write_duplicate()
             settings = open('./pulsonapplib/radar_parse_settings', 'r').read()
             settings = settings.replace('$dT_0$', dT_0)
             settings = settings.replace('$range_start$', range_start)
@@ -188,15 +196,15 @@ class RadarSettingPage(tk.Frame):
             file.write(settings)
             file.close()
 
-            RadarSettingPage.push_to(self)
+            self.push_to()
 
             PulsOnDataApp.hide_error_message(self)
 
-            RadarSettingPage.pass_back(self)
+            self.pass_back()
 
             iteration = 0
             while True:
-                if RadarSettingPage.is_the_same(self):
+                if self.is_the_same():
                     if filecmp.cmp('./pulsonapplib/temp/duplicate_radar_settings', './pulsonapplib/radar_settings'):
                         if range_error:
                             PulsOnDataApp.show_error_message(self, 'WTF are you doing, multiple errors')
@@ -214,9 +222,9 @@ class RadarSettingPage(tk.Frame):
                 else:
                     # Shell ping-pongs between radar settings and temporary settings file every 0.25s until they match
                     iteration += 1
-                    RadarSettingPage.push_to(self)
+                    self.push_to()
                     time.sleep(0.25)
-                    RadarSettingPage.pass_back(self)
+                    self.pass_back()
                     print('Ping-pong iteration #' + str(iteration))
                     # Tries 20 iterations * 0.25s = 20s max waiting time before error raised
                     if iteration >= 20:
@@ -224,8 +232,6 @@ class RadarSettingPage(tk.Frame):
                         break
         except:
             PulsOnDataApp.show_error_message(self, 'You are bad, please enter numbers. ')
-
-
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -244,7 +250,7 @@ class RadarSettingPage(tk.Frame):
                                  command=lambda: controller.show_frame(StartPage))
         back_button.grid(row=8, column=0, columnspan=2, sticky='news')
 
-        RadarSettingPage.write_duplicate(self)
+        self.write_duplicate()
 
         path_delay_label = tk.Label(self, text='Path Delay Through Antennae (ns)',
                                     font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
@@ -294,31 +300,24 @@ class RadarSettingPage(tk.Frame):
         code_channel_entry_box = ttk.Entry(self, font=('Helvetica', 20))
         # code_channel_entry_box.grid(row=7, column=1, padx=10, pady=10, sticky='nws')
 
-        submit_button = ttk.Button(self, text='SUBMIT', style='my.TButton',
-                                   command=lambda: RadarSettingPage.fetch_entries(self, path_delay_entry, range_start_entry, range_end_entry,
-                                                                 transmit_gain_entry, pii_entry, code_channel_entry))
+        submit_button = ttk.Button(self, text='SUBMIT', style='default.TButton',
+                                   command=lambda: self.fetch_entries(path_delay_entry, range_start_entry,
+                                                                      range_end_entry,  transmit_gain_entry, pii_entry,
+                                                                      code_channel_entry))
         submit_button.grid(row=7, column=0, columnspan=2)
 
 
 class DataCollection(tk.Frame):
 
-    host_directory = ''
 
-    def get_host_dir(self):
-        output = str(subprocess.check_output('pwd', shell=True))
-        DataCollection.host_directory = output[2:(len(output)-3)]
-        print(DataCollection.host_directory)
-
-
-    def start(self, a):
-        run_type = '-' + str(a.get())
+    def start(self, v):
+        run_type = '-' + str(v.get())
         print(run_type)
         shoot_pulses = "python control.py " + run_type + " &"
         if run_type == '-q' or run_type == '-c':
             cmds1 = ("sshpass -p 'TimHoward' ssh pi@192.168.2.1", "cd nile_bad_idea/pulsonapplib",
-                     "python control.py " + run_type + " &")  # duplicate of below
+                     "python control.py " + run_type + " &")
 
-            # process1 = subprocess.Popen('/bin/bash', stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
             process1 = subprocess.Popen('/bin/bash', stdin=PIPE, shell=True)
 
             for cmd in cmds1:
@@ -328,19 +327,13 @@ class DataCollection(tk.Frame):
 
             print(str(subprocess.check_output('cat status', shell=True)))
 
-            #subprocess.Popen("python control.py " + run_type + " &")
-
-            stop_button = ttk.Button(self, text='STOP', style='my.TButton',
-                                     command=lambda: DataCollection.stop(self))
+            stop_button = ttk.Button(self, text='STOP', style='default.TButton',
+                                     command=lambda: self.stop())
             stop_button.grid(row=4, column=1, rowspan=2, sticky='news')
             stop_button.config(state='enabled')
             PulsOnDataApp.hide_error_message(self)
         else:
             PulsOnDataApp.show_error_message(self, 'Please specify a run type. ')
-
-        # automatically stop after a minute
-        # time.sleep(5)
-        # DataCollection.stop()
 
     pulse_data_file_directory = r'../UAV-SAR-Radar/pulsonapplib/temp/untitled_data0'
 
@@ -351,14 +344,10 @@ class DataCollection(tk.Frame):
         contents = f.read()
         file.write(contents)
 
-        # make subprocess delete temporary file
-        # subprocess.call('cd')
-
     def stop(self):
         cmds2 = ("sshpass -p 'TimHoward' ssh pi@192.168.2.1", "cd nile_bad_idea/pulsonapplib",
                  "echo 1 > control", "logout")
 
-        # process2 = subprocess.Popen('/bin/bash', stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         process2 = subprocess.Popen('/bin/bash', stdin=PIPE)
 
         for cmd in cmds2:
@@ -366,26 +355,13 @@ class DataCollection(tk.Frame):
             process2.stdin.write(command.encode(encoding='UTF-8'))
         process2.stdin.close()
 
-        print(DataCollection.host_directory)
-        scp = "sshpass -p 'TimHoward' scp pi@192.168.2.1:nile_bad_idea/pulsonapplib/temp/untitled_data0 " + DataCollection.host_directory + "/pulsonapplib/temp"
+        print(PulsOnDataApp.host_directory)
+        scp = "sshpass -p 'TimHoward' scp pi@192.168.2.1:nile_bad_idea/pulsonapplib/temp/untitled_data0 " + PulsOnDataApp.host_directory + "/pulsonapplib/temp"
         subprocess.Popen(scp.encode('UTF-8'), shell=True)
 
         time.sleep(6)
 
-        DataCollection.save_binary_file(self, DataCollection.pulse_data_file_directory)
-
-    """
-    def try_connect(self):
-        try:
-            pulson.PulsON440.connection['sock'] = socket.socket(socket.AF_INET,
-                           socket.SOCK_DGRAM)
-            pulson.PulsON440.connection['sock'].setblocking(False)
-            pulson.PulsON440.connection['sock'].bind((pulson.PulsON440.connection['udp_ip_host'],
-                            pulson.PulsON440.connection['udp_port']))
-            DataCollection.is_connected = True
-        except:
-            DataCollection.is_connected = False
-    """
+        self.save_binary_file(self.pulse_data_file_directory)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -404,7 +380,7 @@ class DataCollection(tk.Frame):
                              command=lambda: controller.show_frame(StartPage))
         back_button.grid(row=8, column=0, columnspan=2, sticky='news')
 
-        DataCollection.get_host_dir(self)
+        PulsOnDataApp.get_host_dir(self)
 
         radio_button_frame = tk.Frame(self)
         radio_button_frame.configure(bg=INTERFACE_COLOR)
@@ -421,17 +397,17 @@ class DataCollection(tk.Frame):
         # v.set("c")  # initialize
         for text, mode, this_row in MODES:
             b = tk.Radiobutton(radio_button_frame, text=text,
-                               variable=v, value=mode, indicatoron=0)
+                               variable=v, value=mode, indicatoron=0, selectcolor=SUCCESS_COLOR, overrelief='flat')
             b.configure(bg=ACCENT_COLOR, foreground=INTERFACE_COLOR, font=('Helvetica', 30))
             b.grid(row=this_row, sticky='news')
 
-        start_button = ttk.Button(self, text='START', style='my.TButton',
-                                  command=lambda: DataCollection.start(self, v))
+        start_button = ttk.Button(self, text='START', style='default.TButton',
+                                  command=lambda: self.start(v))
         start_button.grid(row=2, column=1, rowspan=2, sticky='news')
-        stop_button = ttk.Button(self, text='STOP', style='my.TButton',
-                                 command=lambda: DataCollection.stop(self))
+        stop_button = ttk.Button(self, text='STOP', style='default.TButton',
+                                 command=lambda: self.stop())
         stop_button.grid(row=4, column=1, rowspan=2, sticky='news')
-        #stop_button.config(state='disabled')
+        stop_button.config(state='disabled')
 
 class UnpackExisting(tk.Frame):
 
@@ -446,35 +422,46 @@ class UnpackExisting(tk.Frame):
     args_string = None
 
     def assign_directory(self, frame):
-        UnpackExisting.directory = UnpackExisting.get_unpack_binary_file(self)
+        self.directory = self.get_unpack_binary_file()
 
-        index = None
+        if self.directory == ():
+            return
+
+        index = 0
         backslashed_directory = ''
-        for f in range(0, len(UnpackExisting.directory)):
-            if UnpackExisting.directory[f] == '/':
-                index = f
-            if UnpackExisting.directory[f] == ' ':
+        for f in range(0, len(self.directory)):
+            if self.directory[f] == '/':
+                index = f + 1
+            if self.directory[f] == ' ':
                 backslashed_directory = backslashed_directory + '\ '
             else:
-                backslashed_directory = backslashed_directory + UnpackExisting.directory[f]
+                backslashed_directory = backslashed_directory + self.directory[f]
 
-        UnpackExisting.filename = UnpackExisting.directory[(index+1):]
+        self.filename = self.directory[(index):]
 
         pulse_data_file_label = tk.Label(frame, text='', font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
         pulse_data_file_label.grid(row=0, column=1, columnspan=2, sticky='news', padx=10, pady=10)
 
-        pulse_data_file_label = tk.Label(frame, text='File Selected: ' + UnpackExisting.filename + '\n (' +
-                                                    UnpackExisting.directory + ')',
+        pulse_data_file_label = tk.Label(frame, text='File Selected: ' + self.filename + '\n (' + self.directory + ')',
                                          font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
         pulse_data_file_label.grid(row=0, column=1, columnspan=2, sticky='news', padx=10, pady=10)
 
-        UnpackExisting.args_string = 'python3 Pulson_Code/pulson440_unpack.py -f ' + UnpackExisting.directory + ' -v'
-        print(UnpackExisting.args_string)
-
-    def graph_unpack(self, data_file):
+    def graph_unpack(self, data_file, pickle_it):
+        pickle_dir_string = None
         try:
+            if pickle_it:
+                pickle_directory = filedialog.asksaveasfile(title="Save pickle file as", initialdir='../UAV-SAR-Radar',
+                                                filetypes=[('Pickle files', '*.pkl'), ('all files', '*.')], mode='wb')
+                pickle_dir_string = str(pickle_directory)
+                start_index = None
+                for i in range(0, len(pickle_dir_string)):
+                    if pickle_dir_string[i] == "'" and start_index is None:
+                        start_index = i + 1
+                    elif pickle_dir_string[i] == "'":
+                        end_index = i
+                pickle_dir_string = pickle_dir_string[start_index: end_index]
             PulsOnDataApp.hide_error_message(self)
-            unpack.main(UnpackExisting.directory)
+            unpack.main(self.directory, pickle_dir_string)
 
             # Draws graph on window
             canvas = FigureCanvasTkAgg(unpack.f, self)
@@ -487,18 +474,18 @@ class UnpackExisting(tk.Frame):
             toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
             toolbar.update()
         except:
-            PulsOnDataApp.show_error_message(self, 'Select a valid file dammit')
+            if pickle_dir_string is None:
+                PulsOnDataApp.show_error_message(self, 'Please select a valid file.')
 
     def fetch_colormap_name(self, a):
         try:
             unpack.colormap_name = str(a.get())
         except:
-            PulsOnDataApp.show_error_message(self, 'Select a valid colormap dammit')
+            PulsOnDataApp.show_error_message(self, 'Please select a valid colormap.')
 
-    def do_both(self, data_file, a):
-        UnpackExisting.fetch_colormap_name(self, a)
-        UnpackExisting.graph_unpack(self, data_file)
-
+    def do_both(self, data_file, a, b):
+        self.fetch_colormap_name(a)
+        self.graph_unpack(data_file, b)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -522,28 +509,230 @@ class UnpackExisting(tk.Frame):
         control_bar.rowconfigure((0, 1), weight=1)
         control_bar.columnconfigure((0, 1, 2, 3), weight=1)
 
+        settings_bar = tk.Frame(control_bar)
+        settings_bar.configure(bg=INTERFACE_COLOR)
+        settings_bar.grid(row=1, column=1, columnspan=2)
+        settings_bar.rowconfigure((0), weight=1)
+        settings_bar.columnconfigure((0, 1, 2), weight=1)
+
         # Select pulse code directory
-        pulse_data_file_button = ttk.Button(control_bar, text='Select Data File...', style='my.TButton',
+        pulse_data_file_button = ttk.Button(control_bar, text='Select Data File...', style='default.TButton',
                                             command=lambda: self.assign_directory(control_bar))
         pulse_data_file_button.grid(row=0, column=0, rowspan=2, sticky='news', padx=10, pady=10)
 
         # Display string as label
-        pulse_data_unpack_button = ttk.Button(control_bar, text='Unpack!', style='my.TButton',
-                                              command=lambda: self.do_both(UnpackExisting.directory, colormap_name_entry))
+        pulse_data_unpack_button = ttk.Button(control_bar, text='Unpack!', style='default.TButton',
+                                              command=lambda: self.do_both(self.directory,
+                                                                           colormap_name_entry, pickle_checkbox_entry.get()))
         pulse_data_unpack_button.grid(row=0, column=3, rowspan=2, padx=10, pady=10, sticky='news')
 
-        colormap_name_label = tk.Label(control_bar, text='Select a colormap:',
+        pickle_checkbox_entry = tk.BooleanVar()
+        pickle_checkbox_entry.set(False)
+        pickle_checkbox = tk.Checkbutton(settings_bar, text='Pickle my file', font=SMALLER_FONT, bg=ACCENT_COLOR,
+                                         fg=INTERFACE_COLOR, indicatoron=0, selectcolor=SUCCESS_COLOR,
+                                         overrelief='flat', variable=pickle_checkbox_entry)
+        pickle_checkbox.grid(row=0, column=2, padx=10, pady=10, sticky='news')
+
+        colormap_name_label = tk.Label(settings_bar, text='Select a colormap:',
                                        font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
-        colormap_name_label.grid(row=1, column=1, padx=10, pady=10, sticky='news')
+        colormap_name_label.grid(row=0, column=0, padx=10, pady=10, sticky='news')
         colormap_name_entry = tk.StringVar()
         colormap_name_entry.set('viridis')
-        colormap_name_entry_box = ttk.Combobox(control_bar, textvariable=colormap_name_entry, font=('Helvetica', 20),
-                                               values='viridis plasma inferno magma Greys Purples Blues Greens Oranges Reds YlOrBr YlOrRd OrRd PuRd RdPu BuPu GnBu PuBu YlGnBu PuBuGn BuGn YlGn binary gist_yarg gist_gray gray bone pink spring summer autumn winter cool Wistia hot afmhot gist_heat copper Pastel1 Pastel2 Paired Accent Dark2 Set1 Set2 Set3 tab10 tab20 tab20b tab20c flag prism ocean gist_earth terrain gist_stern gnuplot gnuplot2 CMRmap cubehelix brg hsv gist_rainbow rainbow jet nipy_spectral gist_ncar')
-        colormap_name_entry_box.grid(row=1, column=2, padx=10, pady=10, sticky='news')
+        colormap_name_entry_box = ttk.Combobox(settings_bar, textvariable=colormap_name_entry, font=('Helvetica', 20),
+                                               values='viridis plasma inferno magma Greys Purples Blues Greens Oranges '
+                                                      'Reds YlOrBr YlOrRd OrRd PuRd RdPu BuPu GnBu PuBu YlGnBu PuBuGn '
+                                                      'BuGn YlGn binary gist_yarg gist_gray gray bone pink spring '
+                                                      'summer autumn winter cool Wistia hot afmhot gist_heat copper '
+                                                      'Pastel1 Pastel2 Paired Accent Dark2 Set1 Set2 Set3 tab10 tab20 '
+                                                      'tab20b tab20c flag prism ocean gist_earth terrain gist_stern '
+                                                      'gnuplot gnuplot2 CMRmap cubehelix brg hsv gist_rainbow rainbow '
+                                                      'jet nipy_spectral gist_ncar')
+        colormap_name_entry_box.grid(row=0, column=1, padx=10, pady=10, sticky='news')
 
         """
         __init__ is run by the GUI appears EXCEPT the lambda functions -- triggered by user interaction
         """
+
+class BackProjection(tk.Frame):
+
+    def get_bproj_pkl(self):
+        data_file_directory = filedialog.askopenfilename(initialdir="../UAV-SAR-Radar", title="Select pulse array file",
+                                                         filetypes=(("binary files", "*"),
+                                                                    ("comma-separated values", "*.csv")))
+        return data_file_directory
+
+    directory = None
+    filename = None
+    args_string = None
+
+    def assign_directory(self, frame):
+        self.directory = self.get_bproj_pkl()
+
+        if self.directory == ():
+            return
+
+        index = 0
+        backslashed_directory = ''
+        for f in range(0, len(self.directory)):
+            if self.directory[f] == '/':
+                index = f + 1
+            if self.directory[f] == ' ':
+                backslashed_directory = backslashed_directory + '\ '
+            else:
+                backslashed_directory = backslashed_directory + self.directory[f]
+
+        self.filename = self.directory[index:]
+
+        pulse_data_file_label = tk.Label(frame, text='', font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
+        pulse_data_file_label.grid(row=0, column=1, columnspan=2, sticky='news', padx=10, pady=10)
+        pulse_data_file_label = tk.Label(frame, text='File Selected: ' + self.filename + '\n (' +
+                                                    self.directory + ')',
+                                         font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
+        pulse_data_file_label.grid(row=0, column=1, columnspan=2, sticky='news', padx=10, pady=10)
+
+    def run_progress_bar(self):
+        time.sleep(0.2)
+        print(sar.ProgressValues.is_running)
+        self.sar_progress_bar['maximum'] = sar.ProgressValues.total_length - 2  # buffer because image renders too fast
+        while sar.ProgressValues.is_running:
+            time.sleep(0.05)
+            self.sar_progress_bar['value'] = sar.ProgressValues.iteration
+            self.sar_progress_bar.update()
+            self.pulse_data_bproj_button.config(state='disabled')
+
+    def graph_bproj(self, file, size, pixels, mode):
+        #try:
+            PulsOnDataApp.hide_error_message(self)
+            s = size.get()
+            p = pixels.get()
+            m = mode.get()
+
+            pixel_resolution_ceiling = 500
+            if m is True:
+                pixel_resolution_ceiling = 150
+
+            if p > pixel_resolution_ceiling:
+                if not messagebox.askokcancel("Pixel Resolution Warning", 'The selected pixel resolution, ' + str(p) +
+                                          ', is higher than the recommended pixel resolution for this setting, ' +
+                                          str(pixel_resolution_ceiling) + '. Continue back projection?'):
+                    PulsOnDataApp.show_error_message(self, 'Cancelled back projection.')
+                    return
+
+            sar_thread = threading.Thread(target=sar.main, args=(self.directory, s, p, m))
+            sar_thread.start()
+            sar_progress_bar_control_var = tk.IntVar()
+            sar_progress_bar_control_var.set(sar.ProgressValues.iteration)
+
+            time.sleep(0.5)
+
+            self.sar_progress_bar = ttk.Progressbar(self, length=100, mode='determinate',
+                                                    style='default.Horizontal.TProgressbar')
+            self.sar_progress_bar.grid(row=1, column=0, columnspan=2, sticky='news', padx=50)
+            self.run_progress_bar()
+
+            self.pulse_data_bproj_button.config(state='enabled')
+
+            # Draws graph on window
+
+            canvas = FigureCanvasTkAgg(sar.fluffy, self)
+            canvas.draw()
+            canvas.get_tk_widget().grid(row=5, column=0, rowspan=2, columnspan=2)
+
+            # Navigation tools
+            toolbar_frame = tk.Frame(self)
+            toolbar_frame.grid(row=6, column=0, columnspan=2, sticky='s')
+            toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
+            toolbar.update()
+        #except:
+         #   PulsOnDataApp.show_error_message(self, 'Select a valid file dammit')
+
+    def fetch_colormap_name(self, a):
+        try:
+            sar.colormap_name = str(a.get())
+        except:
+            PulsOnDataApp.show_error_message(self, 'Select a valid colormap dammit')
+
+    def do_both(self, data_file, size, pixels, mode, a):
+        self.fetch_colormap_name(a)
+        self.graph_bproj(data_file, size, pixels, mode)
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        title = 'Back Projection'
+
+        # Configuration is the same for every page
+        self.configure(bg=INTERFACE_COLOR)
+        self.rowconfigure((0, 1, 8), weight=1)
+        self.rowconfigure((2, 3, 4, 5, 6, 7), weight=2)
+        self.columnconfigure((0, 1), weight=1)
+        label = tk.Label(self, text=title, font=LARGE_FONT, bg=INTERFACE_COLOR, fg=TITLE_ACCENT_COLOR)
+        label.grid(row=0, column=0, columnspan=2)
+        back_button = ttk.Button(self, text='Back', style='back.TButton',
+                                 command=lambda: controller.show_frame(StartPage))
+        back_button.grid(row=8, column=0, columnspan=2, sticky='news')
+
+        control_bar = tk.Frame(self)
+        control_bar.configure(bg=INTERFACE_COLOR)
+        control_bar.grid(row=2, column=0, columnspan=2)
+        control_bar.rowconfigure((0, 1), weight=1)
+        control_bar.columnconfigure((0, 1, 2, 3), weight=1)
+
+        settings_bar = tk.Frame(control_bar)
+        settings_bar.configure(bg=INTERFACE_COLOR)
+        settings_bar.grid(row=1, column=1, columnspan=2)
+        settings_bar.rowconfigure((0, 1), weight=1)
+        settings_bar.columnconfigure((0, 1, 2, 3), weight=1)
+
+        # Select pulse code directory
+        pulse_data_file_button = ttk.Button(control_bar, text='Select Data File...', style='default.TButton',
+                                            command=lambda: self.assign_directory(control_bar))
+        pulse_data_file_button.grid(row=0, column=0, rowspan=2, sticky='news', padx=10, pady=10)
+
+        # Display string as label
+        self.pulse_data_bproj_button = ttk.Button(control_bar, text='Generate Image!', style='default.TButton',
+                                              command=lambda: self.do_both(self.directory, bproj_size_entry,
+                                                                           bproj_pixels_entry, fourier_checkbox_entry,
+                                                                           colormap_name_entry))
+        self.pulse_data_bproj_button.grid(row=0, column=3, rowspan=2, padx=10, pady=10, sticky='news')
+
+        fourier_checkbox_entry = tk.BooleanVar()
+        fourier_checkbox_entry.set(False)
+        fourier_checkbox = tk.Checkbutton(settings_bar, text='Fourier', variable=fourier_checkbox_entry,
+                                          font=SMALLER_FONT, bg=ACCENT_COLOR, fg=INTERFACE_COLOR, indicatoron=0,
+                                          selectcolor=SUCCESS_COLOR, overrelief='flat')
+        fourier_checkbox.grid(row=0, column=2, columnspan=2, padx=10, pady=10, sticky='news')
+
+        bproj_size_label = tk.Label(settings_bar, text='Size:', font=SMALLER_FONT, bg=INTERFACE_COLOR,
+                                    fg=ACCENT_COLOR)
+        bproj_size_label.grid(row=0, column=0, padx=10, pady=10, sticky='news')
+        bproj_size_entry = tk.DoubleVar()
+        bproj_size_entry.set(5.0)
+        bproj_size_entry_box = ttk.Entry(settings_bar, textvariable=bproj_size_entry, font=('Helvetica', 20))
+        bproj_size_entry_box.grid(row=0, column=1, padx=10, pady=10, sticky='news')
+        bproj_pixels_label = tk.Label(settings_bar, text='Pixels:', font=SMALLER_FONT, bg=INTERFACE_COLOR,
+                                    fg=ACCENT_COLOR)
+        bproj_pixels_label.grid(row=1, column=0, padx=10, pady=10, sticky='news')
+        bproj_pixels_entry = tk.IntVar()
+        bproj_pixels_entry.set(250)
+        bproj_pixels_entry_box = ttk.Entry(settings_bar, textvariable=bproj_pixels_entry, font=('Helvetica', 20))
+        bproj_pixels_entry_box.grid(row=1, column=1, padx=10, pady=10, sticky='news')
+
+        colormap_name_label = tk.Label(settings_bar, text='Select a colormap:',
+                                       font=SMALLER_FONT, bg=INTERFACE_COLOR, fg=ACCENT_COLOR)
+        colormap_name_label.grid(row=1, column=2, padx=10, pady=10, sticky='news')
+        colormap_name_entry = tk.StringVar()
+        colormap_name_entry.set('viridis')
+        colormap_name_entry_box = ttk.Combobox(settings_bar, textvariable=colormap_name_entry, font=('Helvetica', 20),
+                                               values='viridis plasma inferno magma Greys Purples Blues Greens Oranges '
+                                                      'Reds YlOrBr YlOrRd OrRd PuRd RdPu BuPu GnBu PuBu YlGnBu PuBuGn '
+                                                      'BuGn YlGn binary gist_yarg gist_gray gray bone pink spring '
+                                                      'summer autumn winter cool Wistia hot afmhot gist_heat copper '
+                                                      'Pastel1 Pastel2 Paired Accent Dark2 Set1 Set2 Set3 tab10 tab20 '
+                                                      'tab20b tab20c flag prism ocean gist_earth terrain gist_stern '
+                                                      'gnuplot gnuplot2 CMRmap cubehelix brg hsv gist_rainbow rainbow '
+                                                      'jet nipy_spectral gist_ncar')
+        colormap_name_entry_box.grid(row=1, column=3, padx=10, pady=10, sticky='news')
 
 
 app = PulsOnDataApp()

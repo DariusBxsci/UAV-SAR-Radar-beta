@@ -134,12 +134,17 @@ f = plt.Figure(figsize=(10, 6), dpi=100)
 colormap_name = 'viridis'
 
 
-def main(data_file):
+def main(data_file, pickle_location):
     """
     Top-level function; only takes data_file, automatically visualizes graph
     """
 
     data = unpack(data_file)
+
+    if pickle_location:
+        with open(pickle_location, 'wb') as o:
+            pickle.dump(data, o)
+
 
     # Visualize RTI of unpacked data
     # plt.ioff()
@@ -155,6 +160,7 @@ def main(data_file):
     """
 
     # Try to display to screen if available otherwise save to file
+    # print(type(f))
     a = f.add_subplot(111)
     a.clear()
     a.imshow((20 * np.log10(np.abs(data['scan_data']))), cmap=plt.get_cmap(colormap_name))

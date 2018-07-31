@@ -2,7 +2,7 @@
 dT_0=10.0
 
 # Set the one way range distance to start the scan (m)
-range_start=3.0
+range_start=4.0
 
 # Set the one way range distance to end the scan (m)
 range_stop=15.0
